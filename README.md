@@ -67,7 +67,7 @@ https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environme
 ## CURL 
 cURL is a command line utility for making HTTP requests. 
 
-## Make an API Call
+### Make an API Call
 Example GET calls to an HTTP and REST endpoint
 > curl https://www.google.com
 
