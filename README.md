@@ -101,3 +101,5 @@ To persist data, you do not need to create a fully-featured database; a .json fi
 You are free to implement the API using the language and framework of your choice - the key takeaway for this assignment is learning about HTTP/REST and their best practices. If you're unfamiliar with server/api frameworks, I'd suggest Python's [Flask](https://flask.palletsprojects.com/en/1.1.x/quickstart/#quickstart)
 
 You can add your source code to the /tsdb-intro repo and create a PR once you're ready for a review! 
+
+Soumen Nath
