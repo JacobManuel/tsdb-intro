@@ -17,6 +17,7 @@ Switch to the dev branch, to master, and back.
 ### Creating a Feature Branch 
 From the dev branch: 
 > git checkout -b TSDB-###
+
 It is important to always branch out from the dev branch; this will keep the latest changes in your feature branch. 
 
 ### First Commit
