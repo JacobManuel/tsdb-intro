@@ -9,7 +9,9 @@ Most repos will contain two main branches: master and dev. The master branch is 
 
 Switch to the dev branch, to master, and back.
 > git checkout dev
+
 > git checkout master 
+
 > git checkout dev
 
 ### Creating a Feature Branch 
@@ -32,7 +34,9 @@ Make changes in README.md (e.g. add your name at the end of the file), then:
 ### Subsequent Commits 
 Subsequent commits to that branch are streamlined, since your branch is already pushed to GitHub. 
 > git add README.md
+
 > git commit -m "TSDB-###: commit message"
+
 > git push
 
 ### Ticket Complete - Pull Request
@@ -65,6 +69,7 @@ cURL is a command line utility for making HTTP requests.
 ## Make an API Call
 Example GET calls to an HTTP and REST endpoint
 > curl https://www.google.com
+
 > curl https://www.metaweather.com/api/location/search/?query=toronto
 
 Notice how the REST endpoint returns JSON rather than HTML. 
