@@ -36,3 +36,5 @@ Subsequent commits to that branch are streamlined, since your branch is already 
 
 # Ticket Complete - Pull Request
 Once your feature branch is complete, you'll create a 'pull request' to have your code reviewed and merged into the dev branch. Through the GitHub UI https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request. 
+
+--
