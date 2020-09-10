@@ -12,7 +12,7 @@ function submit(){
 		}
 	}
 
-	//Send a PUT request to the server containing the recipe data
+	//Send a PUT request to the server containing the tweet data
 	req.open("PUT", `/tweets`);
 	req.setRequestHeader("Content-Type", "application/json");
 	req.send(JSON.stringify(tweet));

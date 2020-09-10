@@ -1,4 +1,4 @@
-//Database to store all recipe data
+//Database to store all tweet data
 
 let fs = require('fs');
 const tweetFolder = './tweets/';
@@ -14,6 +14,7 @@ app.put('/tweets', addT);
 app.get('/tweets', bTweet);
 app.get('/tweets/:uID', dispT);
 app.delete('/tweets/:uID', delT);
+app.post('/tweets/:uID', ediT);
 app.listen(3000);
 console.log("Server listening at http://localhost:3000");
 
@@ -31,6 +32,7 @@ function addT(req, res, next){
 	});
 	res.set('Content-Type', 'text/plain')
 	res.status(200).send("");
+	dBase[uID] = database[uID];
 }
 
 function bTweet(req, res, next){
@@ -66,6 +68,8 @@ function dispT(req, res, next){
 			htmlRes +="<p>Author Name: " + fileCont[req.params.uID].author + "</p><br>";
 			htmlRes+="<p>Content:" + fileCont[req.params.uID].content + "</p><br>";
 			htmlRes+=`<button type="button" id="submit" onclick="submit('`+req.params.uID+`')">Delete Tweet</button><br>`;
+			htmlRes+=`<p>Edit the author and/or content</p><br>Author Name: <input type="textbox" id="author" size="50">`;
+			htmlRes+=`<br>Tweet Content: <textarea rows="5" cols="50" id="content"></textarea><br><br><button type="button" id="edit" onclick="edit('`+req.params.uID+`')">Edit Tweet</button>`;
 		}
 	});
 	console.log(htmlRes);
@@ -85,4 +89,38 @@ function delT(req, res, next){
 			console.log("file deleted!");
 		}
 	});
+}
+
+function ediT(req, res, next){
+	
+	console.log("Edit Function");
+	console.log("Req Body");
+	console.log(req.body);
+	body = req.body;
+	// console.log(body['author']);
+	// console.log(body['content']);
+	// console.log(body['author']);
+	// console.log(body['content']);
+	// console.log(req.params.uID);
+	// console.log(req.params.uID);
+	let eTweet = {};
+	fs.readdirSync(tweetFolder).forEach(file => {
+		console.log(file);
+		fileContRaw = fs.readFileSync(tweetFolder+file);
+		let fileCont = JSON.parse(fileContRaw);
+		let uniqueID =  Object.keys(fileCont);
+		console.log("Param: "+req.params.uID);
+		console.log("UniqueID: "+uniqueID);
+		if (req.params.uID == uniqueID){
+			eTweet[req.params.uID] =  fileCont[req.params.uID];
+			eTweet[req.params.uID].author = body['author'];
+			eTweet[req.params.uID].content = body['content'];
+			console.log(eTweet);
+			fs.writeFile(__dirname+'/tweets/'+req.params.uID+'.json', JSON.stringify(eTweet), function (err) {
+				if (err) throw err;
+			});
+		}
+	});
+	res.set('Content-Type', 'text/plain')
+	res.status(200).send("");
 }
