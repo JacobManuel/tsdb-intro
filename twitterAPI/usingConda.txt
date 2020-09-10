@@ -1,0 +1,10 @@
+Create environment:
+conda create -yn twitterAPI
+Activate environment:
+conda activate titterAPI
+
+Deacivate:
+conda deactivate
+
+Remove:
+conda env remove -yn twitterAPI
