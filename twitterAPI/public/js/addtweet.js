@@ -1,6 +1,5 @@
-let tweet = {};
-
 function submit(){
+	let tweet = {};
 	tweet.author = document.getElementById("author").value;
 	tweet.content = document.getElementById("content").value;
 
@@ -8,12 +7,11 @@ function submit(){
 	req.onreadystatechange = function() {
 		if(this.readyState==4 && this.status==200){
 			alert("tweet saved");
-			//init();
 		}
 	}
 
 	//Send a PUT request to the server containing the tweet data
-	req.open("PUT", `/tweets`);
+	req.open("POST", `/tweets`);
 	req.setRequestHeader("Content-Type", "application/json");
 	req.send(JSON.stringify(tweet));
 }

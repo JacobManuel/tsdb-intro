@@ -1,5 +1,3 @@
-let tweet = {};
-
 function submit(uid){
     console.log(uid);
     dUrl  = "/tweets/"+uid;
@@ -8,7 +6,6 @@ function submit(uid){
 	req.onreadystatechange = function() {
 		if(this.readyState==4 && this.status==200){
 			alert("tweet deleted");
-			//init();
 		}
 	}
 
@@ -30,12 +27,11 @@ function edit(uid){
 	req.onreadystatechange = function() {
 		if(this.readyState==4 && this.status==200){
 			alert("tweet edited");
-			//init();
 		}
 	}
 
-	// //Send a delete request
-	req.open("POST", dUrl);
+	// //Send a PUT request
+	req.open("PUT", dUrl);
 	req.setRequestHeader("Content-Type", "application/json");
 	req.send(JSON.stringify(tweet));
 }
