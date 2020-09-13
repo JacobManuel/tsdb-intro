@@ -2,7 +2,7 @@
 #Author: Ryan Fabek
 
 #Import statements
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, url_for, request, jsonify, abort
 import json
 from random import random
 from random import seed
@@ -34,36 +34,44 @@ tweets = [
 
 print(data)
 
-@app.route('/tweets', methods=['GET', 'POST'])
+@app.route('/tweets', methods=['GET', 'POST','PUT', 'PATCH', 'DELETE'])
 
 def tweet():
 
 
-    if request.method == "GET":
+    if request.method == 'GET':
 
         return jsonify({'tweets': tweets})
 
-    else:
-        #Test user input
 
-        Author = input("Input your name: ")
-        Content = input("Tweet:")
-        new_id = randint(1,10);
-        new_tweet = [
+    if request.method == 'PUT':
 
-        {
-            'id':new_id,
-            'Author':Author,
-            'Content':Content
+
+        return print('test')
+
+
+    if request.method == 'PATCH':
+
+        return print('test')
+
+
+
+    if request.method == 'POST':
+
+        if not request.json:
+            abort(400)
+
+        new_tweet = [{
+            'id': tweets[-1]['id'] + 1,
+            'Author': request.json['Author'],
+            'Content': request.json.get('Content','')
 
         }
-
         ]
 
-        tweets.update(new_tweet)
+        tweets.append(new_tweet)
 
-
-
+        return jsonify({'new_tweet' : new_tweet}), 201
 
 
 
