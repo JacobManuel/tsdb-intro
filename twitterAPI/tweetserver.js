@@ -127,7 +127,7 @@ function patchT(req, res, next){
 	let database = {};
 	fs.readdirSync(tweetFolder).forEach(file => {
 		console.log(file);
-		fileContRaw = fs.readFileSync(tweetFolder+file);
+		let fileContRaw = fs.readFileSync(tweetFolder+file);
 		let fileCont = JSON.parse(fileContRaw);
 		let uniqueID =  Object.keys(fileCont);
 		console.log("Param: "+req.params.uID);
