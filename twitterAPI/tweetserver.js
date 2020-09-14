@@ -13,6 +13,7 @@ app.get('/tweets', bTweet);
 app.get('/tweets/:uID', dispT);
 app.delete('/tweets/:uID', delT);
 app.put('/tweets/:uID', ediT);
+app.patch('/tweets/:uID', patchT);
 app.listen(3000);
 console.log("Server listening at http://localhost:3000");
 
@@ -34,7 +35,7 @@ function addT(req, res, next){
 
 function bTweet(req, res, next){
 	console.log("browse");
-	let htmlRes = "";
+	let htmlRes = '<a href="/index.html">Home</a><br><br>';
 	fs.readdirSync(tweetFolder).forEach(file => {
 		console.log(file);
 		fileContRaw = fs.readFileSync(tweetFolder+file);
@@ -61,6 +62,7 @@ function dispT(req, res, next){
 		if (req.params.uID == uniqueID){
 			console.log("Matched!");
 			htmlRes +='<script src="/js/modifytweet.js"></script>';
+			htmlRes +='<a href="/index.html">Home</a><br><a href="/tweets">Browse</a><br><br>';
 			htmlRes +="<p>Author Name: " + fileCont[req.params.uID].author + "</p><br>";
 			htmlRes+="<p>Content: " + fileCont[req.params.uID].content + "</p><br>";
 			htmlRes+=`<button type="button" id="submit" onclick="submit('`+req.params.uID+`')">Delete Tweet</button><br>`;
@@ -106,6 +108,38 @@ function ediT(req, res, next){
 			database[req.params.uID] =  fileCont[req.params.uID];
 			database[req.params.uID].author = body['author'];
 			database[req.params.uID].content = body['content'];
+			console.log(database);
+			fs.writeFile(__dirname+'/tweets/'+req.params.uID+'.json', JSON.stringify(database), function (err) {
+				if (err) throw err;
+			});
+		}
+	});
+	res.set('Content-Type', 'text/plain')
+	res.status(200).send("");
+}
+
+function patchT(req, res, next){
+	
+	console.log("Patch Function");
+	console.log("Req Body");
+	console.log(req.body);
+	let body = req.body;
+	let database = {};
+	fs.readdirSync(tweetFolder).forEach(file => {
+		console.log(file);
+		fileContRaw = fs.readFileSync(tweetFolder+file);
+		let fileCont = JSON.parse(fileContRaw);
+		let uniqueID =  Object.keys(fileCont);
+		console.log("Param: "+req.params.uID);
+		console.log("UniqueID: "+uniqueID);
+		if (req.params.uID == uniqueID){
+			database[req.params.uID] =  fileCont[req.params.uID];
+			if (body['author']==''){
+				database[req.params.uID].content = body['content'];
+			}
+			else{
+				database[req.params.uID].author = body['author'];
+			}
 			console.log(database);
 			fs.writeFile(__dirname+'/tweets/'+req.params.uID+'.json', JSON.stringify(database), function (err) {
 				if (err) throw err;
