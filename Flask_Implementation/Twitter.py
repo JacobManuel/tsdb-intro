@@ -8,10 +8,6 @@ from random import random
 from random import seed
 
 
-#Global variables
-
-data = ''
-
 #Create instance of flask application
 app = Flask(__name__)
 
@@ -28,7 +24,6 @@ tweets = [
 
 ]
 
-print(data)
 
 
 
@@ -40,7 +35,7 @@ def get_tweet():
     #Retrieves all tweets
     if request.method == 'GET':
 
-        return render_template('index.html')
+        return jsonify({'tweets': tweets})
 
         #Returns tweets in json format
         #return jsonify({'tweets': tweets})
@@ -81,7 +76,7 @@ def get_tweet_2(tweet_id):
 
         tweet[0]['Author'] = request.json.get('Author')
         tweet[0]['Content'] = request.json.get('Content')
-        return jsonify({'tweet':tweet[0]})
+        return jsonify({'tweets':tweets})
 
 
     if request.method == 'GET':
@@ -104,6 +99,7 @@ def get_tweet_2(tweet_id):
             abort(404)
 
         tweets.remove(tweet[0])
+        return jsonify({'tweets': tweets})
 
     if request.method == 'PATCH':
 
@@ -114,6 +110,7 @@ def get_tweet_2(tweet_id):
 
         tweet[0]['Author'] = request.json.get('Author', tweet[0]['Author'])
         tweet[0]['Content'] = request.json.get('Content', tweet[0]['Content'])
+        return jsonify({'tweets':tweets})
 
 
 
